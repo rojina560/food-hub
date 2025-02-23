@@ -10,6 +10,7 @@ const MenuItem = ({item}) => {
                 <p className='text-gray-500'>{recipe}</p>
             </div>
             <p className='text-[#D99904]'>${price}</p>
+            
         </div>
     );
 };
