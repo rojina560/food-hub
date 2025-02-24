@@ -17,7 +17,7 @@ const Home = () => {
                 </Helmet>
           <Banner></Banner>
           <Category></Category>
-          <Parallex></Parallex>
+          <Parallex title='Food Hub' bgColor='bg-white'></Parallex>
           <PopularMenu></PopularMenu>
           <CallUs></CallUs>
           <Featured></Featured>
