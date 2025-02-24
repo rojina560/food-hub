@@ -17,7 +17,7 @@ const Menu = () => {
         <title>Food Hub | Menu</title>
       </Helmet>
       {/* main cover */}
-      <Cover img={menuImage} title={'Our Menu'}></Cover>
+      <Cover img={menuImage} title={'Our Menu'} ></Cover>
       <Offered></Offered>
       <Dessert></Dessert>
       <Salad></Salad>

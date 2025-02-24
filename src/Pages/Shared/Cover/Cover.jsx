@@ -2,27 +2,27 @@ import { Parallax } from 'react-parallax';
 
 const Cover = ({img,title}) => {
     return (
-        <Parallax
-        blur={{ min: -50, max: 50 }}
+        <div className='border'>
+          <Parallax
+        blur={{ min: -50, max:30 }}
         bgImage={img}
-        bgImageAlt="the dog"
-        strength={-200}
+        bgImageAlt="Food Hub"
+        strength={-100}
 
-  className="hero h-[600px]"
+  className="hero min-h-screen -mb-16"
   >
   <div className="hero-overlay bg-opacity-60"></div>
   <div className="hero-content text-neutral-content text-center">
-    <div className="max-w-md">
-      <h1 className="mb-5 text-5xl font-bold uppercase">{title}</h1>
-      <p className="mb-5 uppercase">
-        Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem
-        quasi. In deleniti eaque aut repudiandae et a id nisi.
-      </p>
-     
-    </div>
+  <div className="bg-black opacity-50 w-full  max-w-screen-lg p-6 sm:p-8 md:p-10 lg:py-12 rounded-lg">
+    <h1 className="mb-5 text-3xl sm:text-4xl md:text-5xl font-bold uppercase">{title}</h1>
+    <p className="mb-5 uppercase px-4 sm:px-6 md:px-10">
+    whould you like to try a dish
+    </p>
   </div>
+</div>
 
     </Parallax>
+        </div>
        
     );
 };
