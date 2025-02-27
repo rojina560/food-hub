@@ -1,12 +1,17 @@
 import React, { use, useContext } from 'react';
 import { AuthContext } from '../../Provider/AuthProvider';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import useAxiosPublic from '../../Hooks/useAxiosPublic';
+import Swal from 'sweetalert2';
+import SocialLogin from '../../Components/SocialLogin/SocialLogin';
 
 const Register = () => {
-  const navigate = useLocation()
+  const axiosPublic = useAxiosPublic()
+  const navigate = useNavigate()
     const {createUser,updateUserProfile,setUser , user} = useContext(AuthContext)
-    const handleRegister = e =>{
+   
+    const handleRegister = (e) =>{
         e.preventDefault()
         const form = e.target
         const name = form.name.value;
@@ -14,20 +19,40 @@ const Register = () => {
         const email = form.email.value;
         const password = form.password.value;
         console.log(email,password,name,photo);
+       
         createUser(email,password)
         .then(result =>{
           console.log(result.user);
          
-          updateUserProfile(name,photo)
+           updateUserProfile(name,photo)
           setUser({...user,photoURL:photo,displayName:name})
-          .then(() => {
-            console.log("User profile updated");
-            form.reset();
-            navigate('/login')
+         
+            // create use entry in the database
+            const userInfo = {
+              name,
+              email
+            }
+              
+            axiosPublic.post('/users',userInfo)
+            .then(res =>{
+              if(res.data.insertedId){
+                console.log('user created in the database');
+                form.reset();
+                Swal.fire({
+                  position: "top-end",
+                  icon: "success",
+                  title: "Your work has been saved",
+                  showConfirmButton: false,
+                  timer: 1500
+                });
+                navigate('/')
+              
+              }
+              
+            })
+           
           })
-          .catch((error) => console.error("Profile Update Error:", error));
-
-        })
+         
         .catch(error =>{
           console.log(error);
         })
@@ -47,7 +72,7 @@ const Register = () => {
               quasi. In deleniti eaque aut repudiandae et a id nisi.
             </p>
           </div>
-          <div className="card bg-base-100 md:w-1/2 max-w-sm shrink-0 shadow-2xl">
+          <div className="card md:w-1/2 max-w-sm shrink-0 shadow-2xl">
             <form onSubmit={handleRegister} className="card-body">
               <div className="form-control">
                 <label className="label">
@@ -74,10 +99,12 @@ const Register = () => {
                 <input type="password" name='password' placeholder="password" className="input input-bordered" required />
               </div>
               <div className="form-control mt-6">
-                <input className='btn btn-secondary' type="submit" value="Register" />
+                <input className='btn bg-[#D1A054]' type="submit" value="Register" />
                
               </div>
-              <p className='text-center'>Already have an acount <Link className='text-blue-700' to={'/login'}>login</Link></p>
+              <p className='text-center text-[#D1A054]'>Already registered? Go to<Link className='text-violet-800 underline' to={'/login'}> login</Link></p>
+              <p className='text-center'>or sign up with </p>
+              <SocialLogin></SocialLogin>
             </form>
           </div>
         </div>
