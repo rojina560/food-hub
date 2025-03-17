@@ -29,7 +29,7 @@ const DashBoard = () => {
                     <div className="divider"></div>
                     <li><NavLink to={"/"}> <FaHome></FaHome>Home</NavLink></li>
                     <li><NavLink to={"/order"}> <MdMenu></MdMenu>Menu</NavLink></li>
-                    <li><NavLink to={"/order/"}> <FaShoppingBag></FaShoppingBag>Menu</NavLink></li>
+                    <li><NavLink to={"/order/"}> <FaShoppingBag></FaShoppingBag>Shop</NavLink></li>
                     <li><NavLink to={"/order/contact"}> <MdEmail></MdEmail>contact</NavLink></li>
                 </ul>
             </div>
