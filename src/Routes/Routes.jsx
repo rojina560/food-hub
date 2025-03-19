@@ -13,6 +13,7 @@ import AllUsers from "../Pages/DashBorad/AllUsers/AllUsers";
 import AdminRoute from "./AdminRoute";
 import AddItems from "../Pages/AddItems/AddItems";
 import ManageItems from "../Pages/DashBorad/ManageItems/ManageItems";
+import UpdateItems from "../Pages/DashBorad/UpdateItems/UpdateItems";
 
 export const router = createBrowserRouter([{
     path:'/',
@@ -62,9 +63,13 @@ export const router = createBrowserRouter([{
         },
         {
             path: 'manageItems',
-            element: <ManageItems></ManageItems>
+            element: <AdminRoute><ManageItems></ManageItems></AdminRoute>
 
-
+        },
+        {
+            path: 'updateItem/:id',
+            element: <AdminRoute><UpdateItems></UpdateItems></AdminRoute>,
+            loader: ({params})=>fetch(`http://localhost:5001/menu/${params.id}`)
         },
         {
             path: 'allUsers',

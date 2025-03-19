@@ -1,13 +1,15 @@
 import React from 'react';
-import SectionTitle from '../../Components/SectionTitle';
+import { useLoaderData } from 'react-router-dom';
+import useAxiosPublic from '../../../Hooks/useAxiosPublic';
+import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 import { useForm } from 'react-hook-form';
-import { FaAddressBook } from 'react-icons/fa';
-import useAxiosPublic from '../../Hooks/useAxiosPublic';
-import useAxiosSecure from '../../Hooks/useAxiosSecure';
+import SectionTitle from '../../../Components/SectionTitle';
 import Swal from 'sweetalert2';
 const image_hosting_key = import.meta.env. VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key }`
-const AddItems = () => {
+
+const UpdateItems = () => {
+    const {name,category,recipe,price,_id} = useLoaderData()
     const { register, handleSubmit,reset } = useForm();
     const axiosPublic = useAxiosPublic()
     const axiosSecure = useAxiosSecure()
@@ -30,13 +32,13 @@ const AddItems = () => {
                 image: res.data.data.display_url
             }
             // 
-            const menuRes = await axiosSecure.post('/menu',menuItem);
+            const menuRes = await axiosSecure.patch(`/menu/${_id}`,menuItem);
             console.log(menuRes.data);
-            if(menuRes.data.insertedId){
+            if(menuRes.data.modifiedCount > 0){
                 // show success popup
                 reset()
                 Swal.fire({
-                    title: `${data.name}is added to the menu`,
+                    title: `${data.name}is updated to the menu`,
                     icon: "success",
                     showConfirmButton: false,
                     timer: 1500
@@ -50,7 +52,7 @@ const AddItems = () => {
     }
     return (
         <div>
-        <SectionTitle heading="add an item" subHeading="What's new?" ></SectionTitle>
+        <SectionTitle heading="updated item" subHeading="What's new?" ></SectionTitle>
         <div>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="form-control w-full my-6">
@@ -59,6 +61,7 @@ const AddItems = () => {
                     </label>
                     <input
                         type="text"
+                        defaultValue={name}
                         placeholder="Recipe Name"
                         {...register('name', { required: true })}
                         required
@@ -70,7 +73,7 @@ const AddItems = () => {
                         <label className="label">
                             <span className="label-text">Category*</span>
                         </label>
-                        <select defaultValue="default" {...register('category', { required: true })}
+                        <select defaultValue={category} {...register('category', { required: true })}
                             className="select select-bordered w-full">
                             <option disabled value="default">Select a category</option>
                             <option value="salad">Salad</option>
@@ -88,6 +91,7 @@ const AddItems = () => {
                         </label>
                         <input
                             type="number"
+                            defaultValue={price}
                             placeholder="Price"
                             {...register('price', { required: true })}
                             className="input input-bordered w-full" />
@@ -99,7 +103,7 @@ const AddItems = () => {
                     <label className="label">
                         <span className="label-text">Recipe Details</span>
                     </label>
-                    <textarea {...register('recipe')} className="textarea textarea-bordered h-24" placeholder="Bio"></textarea>
+                    <textarea defaultValue={recipe} {...register('recipe')} className="textarea textarea-bordered h-24" placeholder="Bio"></textarea>
                 </div>
 
                 <div className="form-control w-full my-6">
@@ -107,7 +111,7 @@ const AddItems = () => {
                 </div>
 
                 <button className="btn">
-                    Add Item <FaAddressBook className="ml-4"></FaAddressBook>
+                    update menu item
                 </button>
             </form>
         </div>
@@ -115,4 +119,4 @@ const AddItems = () => {
     );
 };
 
-export default AddItems;  
+export default UpdateItems;
