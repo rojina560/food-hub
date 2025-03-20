@@ -14,6 +14,7 @@ import AdminRoute from "./AdminRoute";
 import AddItems from "../Pages/AddItems/AddItems";
 import ManageItems from "../Pages/DashBorad/ManageItems/ManageItems";
 import UpdateItems from "../Pages/DashBorad/UpdateItems/UpdateItems";
+import Payment from "../Pages/DashBorad/Payment/Payment";
 
 export const router = createBrowserRouter([{
     path:'/',
@@ -64,6 +65,11 @@ export const router = createBrowserRouter([{
         {
             path: 'manageItems',
             element: <AdminRoute><ManageItems></ManageItems></AdminRoute>
+
+        },
+        {
+            path:'payment',
+            element:<Payment></Payment>
 
         },
         {
