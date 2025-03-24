@@ -20,10 +20,10 @@ const DashBoard = () => {
                     <li><NavLink to={"/dashboard/allUsers"}> <FaUsers></FaUsers>all user</NavLink></li></>
                      : <>
                         <li><NavLink to={"/dashboard/userHome"}> <FaHome></FaHome>Home</NavLink></li>
-                    <li><NavLink to={"/dashboard/reservation"}> <FaCalendar></FaCalendar>Reservation</NavLink></li>
+                    <li><NavLink to={"/dashboard/history"}> <FaCalendar></FaCalendar>History</NavLink></li>
                     <li><NavLink to={"/dashboard/cart"}> <FaShoppingCart></FaShoppingCart> My Cart {cart.length}</NavLink></li>
                     <li><NavLink to={"/dashboard/reveiw"}> <FaAd></FaAd>Reveiw</NavLink></li>
-                    <li><NavLink to={"/dashboard/bookings"}> <FaList></FaList>Booking</NavLink></li>
+                    <li><NavLink to={"/dashboard/paymentHistory"}> <FaList></FaList>Reall Payment History</NavLink></li>
                     </>}
                     
                     <div className="divider"></div>

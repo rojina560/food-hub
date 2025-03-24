@@ -14,12 +14,13 @@ import 'swiper/css/navigation';
 
 
 const Testimonial = () => {
-    const [reviews,setReveiws] = useState([])
+    const [reviews,setReviews] = useState([])
     useEffect(()=>{
-        fetch('http://localhost:5000/reveiws')
+        fetch('http://localhost:5001/reveiws')
         .then(res=>res.json())
-        .then(data =>setReveiws(data))
+        .then(data =>setReviews(data))
     },[])
+    console.log('this frpm reveiw', reviews);
     return (
         <section>
             <SectionTitle
