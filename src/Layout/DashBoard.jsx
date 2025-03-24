@@ -19,7 +19,7 @@ const DashBoard = () => {
                     <li><NavLink to={"/dashboard/manageItems"}> <FaList></FaList>manage items</NavLink></li>
                     <li><NavLink to={"/dashboard/allUsers"}> <FaUsers></FaUsers>all user</NavLink></li></>
                      : <>
-                        <li><NavLink to={"/dashboard/userHome"}> <FaHome></FaHome>Home</NavLink></li>
+                        <li><NavLink to={"/dashboard/userHome"}> <FaHome></FaHome> User Home</NavLink></li>
                     <li><NavLink to={"/dashboard/history"}> <FaCalendar></FaCalendar>History</NavLink></li>
                     <li><NavLink to={"/dashboard/cart"}> <FaShoppingCart></FaShoppingCart> My Cart {cart.length}</NavLink></li>
                     <li><NavLink to={"/dashboard/reveiw"}> <FaAd></FaAd>Reveiw</NavLink></li>
