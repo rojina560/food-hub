@@ -15,15 +15,18 @@ const CheckoutForm = () => {
     const axiosSecure = useAxiosSecure();
     const [cart,refetch] = useCart();
     const totalPrice = cart.reduce((total,item) => total + item.price,0) 
-    useEffect(()=>{
-     {totalPrice > 0}
-     axiosSecure.post('/create-payment-intent',{price: totalPrice})
-     .then(res =>{
-       console.log(res.data.clientSecret);
-       setClientSecret(res.data.clientSecret)
-     })
+    useEffect(() => {
+      if (totalPrice > 0) {  // Proper check
+        axiosSecure.post('/create-payment-intent', { price: totalPrice })
+          .then(res => {
+            console.log(res.data.clientSecret);
+            setClientSecret(res.data.clientSecret);
+          })
+          .catch(error => console.error("Error fetching clientSecret:", error));
+      }
+    }, [axiosSecure, totalPrice]);
     
-    },[axiosSecure,totalPrice])
+   
     const handleSubmit = async (event) =>{
         event.preventDefault()
         if(!stripe || !elements){
@@ -43,6 +46,7 @@ const CheckoutForm = () => {
         if(error){
           console.log('payment error',error);
           setError(error.message)
+          return
         }
         else{
           console.log('payment method',paymentMethod);
@@ -59,7 +63,8 @@ const CheckoutForm = () => {
           }
         })
         if(confirmError){
-          console.log('confirm error');
+          console.log('confirm error',confirmError.message);
+          return;
         }
         else{
           console.log('payment intent',paymentIntent);
@@ -68,7 +73,7 @@ const CheckoutForm = () => {
             setTransaction(paymentIntent.id)
             // now save the payment in the database 
             const payment = {
-              email: user.email,
+              email: user?.email || 'no-email@example.com',
               price: totalPrice,
               transactionId : paymentIntent.id,
               date: new Date(), // utc date convert.use moment js to 
@@ -83,7 +88,7 @@ const CheckoutForm = () => {
               Swal.fire({
                 position: "top-end",
                 icon: "success",
-                title: "Your work has been saved",
+                title: "Payment successful!",
                 showConfirmButton: false,
                 timer: 1500
               });
